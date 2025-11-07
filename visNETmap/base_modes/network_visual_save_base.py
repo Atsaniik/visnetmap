@@ -740,7 +740,7 @@ def visnet(nodes, edges, network_title='Atsaniik', description_df=None, descript
             overflow-x: auto;
         }}
         #node-config .filter-group, #description-table .table-group {{
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }}
         #node-config .filter-group label, #description-table .table-group label {{
             display: block;
@@ -750,7 +750,24 @@ def visnet(nodes, edges, network_title='Atsaniik', description_df=None, descript
         }}
         .label-search {{ 
             color: #0066cc; /* Added color for Node Label Search label */
+            display: block;              /* ensures it takes full width */
+            text-align: center;          /* centers the text */
+            font-size: 1.2em;            /* makes the label larger */
+            font-weight: bold;           /* optional: makes it stand out */
+            margin-bottom: 10px;         /* space between label and input */
+            
         }}
+        #label-search {{
+                        display: block;
+                        margin: 0 auto;
+                        width: 80%;
+                        height: 40px;            /* increases height */
+                        padding: 10px 12px;      /* adds internal space */
+                        font-size: 1.1em;        /* makes text slightly larger */
+                        border: 1px solid #ccc;
+                        border-radius: 6px;      /* optional rounded corners */
+                        box-sizing: border-box;
+                    }}
         #node-config select, #node-config input[type="number"], #node-config input[type="text"], #description-table table {{
             width: 100%;
             padding: 5px;
@@ -845,6 +862,11 @@ def visnet(nodes, edges, network_title='Atsaniik', description_df=None, descript
         <div class="legend" onclick="togglePanel('node-config')">Node & Edge Selection</div>
         <div id="node-config" class="panel-hidden">
             <div class="filter-group">
+                <label class="label-search">Node Label Search</label>
+                <input type="text" id="label-search" placeholder="Enter labels, e.g., Node1,Node2" oninput="updateSuggestions()">
+                <div id="label-suggestions" class="suggestions"></div>
+            </div>
+            <div class="filter-group">
                 <label>Maximum Nodes to Display</label>
                 <select id="max-display-select" onchange="updateNodes()">
                     {max_display_options}
@@ -871,11 +893,7 @@ def visnet(nodes, edges, network_title='Atsaniik', description_df=None, descript
                     <input type="number" id="size-max" placeholder="Max" min="0" oninput="updateNodes()">
                 </div>
             </div>
-            <div class="filter-group">
-                <label class="label-search">Node Label Search</label>
-                <input type="text" id="label-search" placeholder="Enter labels, e.g., Node1,Node2" oninput="updateSuggestions()">
-                <div id="label-suggestions" class="suggestions"></div>
-            </div>
+
             <div class="filter-group">
                 <label>Node Title (Class)</label>
                 <select id="title-select" multiple onchange="updateNodes()">
