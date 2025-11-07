@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "visnetmap" # The name that will appear on PyPI
-version = "0.1.2"
+version = "0.1.3"
 authors = [
     {name = "Peng (Atsaniik) Yang", email = "peng.yang@uef.fi"},
 ]
@@ -27,4 +27,5 @@ dependencies = [ # Packages your code needs to run
 "Bug Tracker" = "https://github.com/Atsaniik/visnetmap/issues"
 
 [tool.setuptools.packages]
+
 find = {} # Automatically find all packages
