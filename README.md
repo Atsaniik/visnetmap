@@ -9,7 +9,9 @@
 It provides two main visualization tools:
 
 - `visnet()` — interactive network graph visualization using **vis-network**
+![netWork example](https://raw.githubusercontent.com/Atsaniik/visnetmap/main/img/network.png)
 - `netMap()` — interactive geographical network map using **Leaflet**
+![netMap example](https://raw.githubusercontent.com/Atsaniik/visnetmap/main/img/netmap.png)
 
 The package is designed for researchers, students, and analysts who want to quickly generate shareable HTML visualizations from Python data structures, NetworkX graphs, or location-based network data.
 
