@@ -13,7 +13,7 @@ def latLong(place):
     full_address = location.address
     return latitude, longitude, full_address
 
-def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100, writeHTML="network_map.html", default_size=5,browserView =False ):
+def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100, folder_path=None,writeHTML="network_map.html", default_size=5,browserView =False ):
     """
     cities_data (list):  {
         "node": "New York", "lat": 40.7128, "lon": -74.0060, "size": 15,
@@ -575,7 +575,11 @@ def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100
     from pathlib import Path
     if writeHTML is None:
         writeHTML ='map.html'
-    folder_path = Path(f"{Path(__file__).parent.resolve()}/mapOutPut/")
+    if folder_path is None:
+          
+      folder_path = Path(f"{Path(__file__).parent.resolve()}/mapOutPut/")
+    else:
+        folder_path = Path(folder_path)
     folder_path.mkdir(parents=True, exist_ok=True)
     writeOut = f"{folder_path}/{writeHTML}"
 
