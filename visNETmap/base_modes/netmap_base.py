@@ -13,7 +13,7 @@ def latLong(place):
     full_address = location.address
     return latitude, longitude, full_address
 
-def netmap(cities_data, connections_data, title="Network Map", maximum_nodes=100, output_html_file="network_map.html", default_size=5):
+def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100, writeHTML="network_map.html", default_size=5,browserView =False ):
     """
     cities_data (list):  {
         "node": "New York", "lat": 40.7128, "lon": -74.0060, "size": 15,
@@ -226,10 +226,12 @@ def netmap(cities_data, connections_data, title="Network Map", maximum_nodes=100
       let lonMax = 180;
 
       const map = L.map('map').setView([20, 0], 2);
-      L.tileLayer('https://{{s}}.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}.png', {{
+      L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
         maxZoom: 19,
-        attribution: '© CartoDB'
+        attribution: '© OpenStreetMap contributors'
       }}).addTo(map);
+      
+
 
       const titleDiv = document.getElementById('map-title');
       const draggable = new L.Draggable(titleDiv);
@@ -570,12 +572,23 @@ def netmap(cities_data, connections_data, title="Network Map", maximum_nodes=100
     </body>
     </html>
     """
+    from pathlib import Path
+    if writeHTML is None:
+        writeHTML ='map.html'
+    folder_path = Path(f"{Path(__file__).parent.resolve()}/mapOutPut/")
+    folder_path.mkdir(parents=True, exist_ok=True)
+    writeOut = f"{folder_path}/{writeHTML}"
 
-    with open(output_html_file, "w", encoding="utf-8") as f:
+    
+
+    with open(writeOut, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"Generated {output_html_file} successfully!")
-    import webbrowser
-    webbrowser.open(output_html_file)
+   
+    print(f"Generated {writeOut} successfully!")
+    if browserView:
+      import webbrowser
+      webbrowser.open(writeOut)
+    return None
 
 if __name__ == "__main__":
     cities = [
@@ -657,4 +670,4 @@ if __name__ == "__main__":
         },
     ]
 
-    netmap(cities, connections, title="net map", output_html_file='simple.html', maximum_nodes=2)
+    netMap(cities, connections, title="net map", writeHTML='simple.html', maximum_nodes=9,browserView=True)
