@@ -9,7 +9,7 @@ version = "0.2.1"
 authors = [
     {name = "Peng (Atsaniik) Yang", email = "peng.yang@uef.fi"},
 ]
-description = "A short description of my package"
+description = "Creating interactive network and map visualizations"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
