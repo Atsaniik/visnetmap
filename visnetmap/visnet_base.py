@@ -269,6 +269,7 @@ def visnet(
     network_subtitle: str | None = None,
     description_df: pd.DataFrame | None = None,
     description_title: str = "Introduce your network",
+    folder_path = None,
     writeHTML: str | None = "network_visualization.html",
     browserView: bool = False,
     min_default_node_size: int | float = 0,
@@ -2141,8 +2142,11 @@ def visnet(
     from pathlib import Path
     if writeHTML is None:
         writeHTML = 'network.html'
-
-    folder_path = Path(f"{Path(__file__).parent.resolve()}/netOutPut/")
+    if folder_path is None:
+        folder_path = Path(f"{Path(__file__).parent.resolve()}/netOutPut/")
+        
+    else:
+        folder_path = Path(folder_path)
     folder_path.mkdir(parents=True, exist_ok=True)
     writeOut = f"{folder_path}/{writeHTML}"
 
