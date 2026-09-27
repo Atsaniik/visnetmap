@@ -537,7 +537,7 @@ mapOutPut/
 Example:
 
 ```python
-visnet(G, writeHTML="my_network.html")
+visnet(G, folder_path= r"C:\Users\pengyang\phd\networkPython\github/", writeHTML="my_network.html")
 ```
 
 creates:
@@ -549,7 +549,7 @@ netOutPut/my_network.html
 Example:
 
 ```python
-netMap(cities, connections, writeHTML="my_map.html")
+netMap(cities, connections,folder_path= r"C:\Users\pengyang\phd\networkPython\github/", writeHTML="my_map.html")
 ```
 
 creates:
