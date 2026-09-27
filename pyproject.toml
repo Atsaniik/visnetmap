@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "visnetmap" # The name that will appear on PyPI
-version = "0.2.1"
+version = "0.2.2"
 authors = [
     {name = "Peng (Atsaniik) Yang", email = "peng.yang@uef.fi"},
 ]
