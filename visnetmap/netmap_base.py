@@ -7,13 +7,15 @@ import time
 def latLong(place):
     user_agent = random.randint(10000, 99999)
     geolocator = Nominatim(user_agent=str(user_agent))
-    location = geolocator.geocode(place)
+    location = geolocator.geocode(place,timeout=11)
+    if location is None:
+      raise ValueError(f"Could not geocode place: {place}")
     latitude = location.latitude
     longitude = location.longitude
     full_address = location.address
     return latitude, longitude, full_address
 
-def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100, folder_path=None,writeHTML="network_map.html", default_size=5,browserView =False ):
+def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100, folder_path=None,writeHTML="network_map.html", default_size=12,browserView =False,tile_layer="esri_gray" ):
     """
     cities_data (list):  {
         "node": "New York", "lat": 40.7128, "lon": -74.0060, "size": 15,
@@ -26,6 +28,39 @@ def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100
         "default_size": node size 5
     },
     maximum_nodes: maximum nodes to display initially
+    
+    tile_layer : str, optional
+        Name of the map tile layer to use as the background map.
+
+        Supported values depend on the `tile_layers` dictionary defined inside
+        the function.
+
+        Recommended available options:
+
+            "esri_gray"
+                Esri World Light Gray Canvas.
+                Good for network visualizations because the background is
+                visually simple and does not compete with nodes and edges.
+
+            "esri_street"
+                Esri World Street Map.
+                More detailed street-map style.
+
+            "esri_satellite"
+                Esri World Imagery.
+                Satellite imagery background.
+
+            "osm"
+                OpenStreetMap public tile server.
+
+                Warning:
+                    This may return HTTP 403 if the application is blocked by
+                    OpenStreetMap's public tile servers or does not comply with
+                    their tile usage policy. For reliable use, prefer another
+                    tile provider or use your own tile service.
+
+        Default is "esri_gray".
+
     """
     df_nodes = pd.DataFrame(cities_data)
     if not df_nodes['lat'].apply(lambda x: isinstance(x, (int, float)) and not isinstance(x, bool)).all():
@@ -86,6 +121,49 @@ def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100
     # Extract unique colors and hover texts from all cities_data
     unique_colors = sorted(set(city['color'] for city in cities_data))
     unique_hovers = sorted(set(city['node_hover'] for city in cities_data))
+
+
+
+    tile_layers = {
+        "esri_gray": """
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 16,
+        attribution: 'Tiles &copy; Esri'
+      }).addTo(map);
+        """,
+
+        "esri_street": """
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles &copy; Esri'
+      }).addTo(map);
+        """,
+
+        "esri_satellite": """
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles &copy; Esri'
+      }).addTo(map);
+        """,
+
+        "osm": """
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+        """
+    }
+
+    if tile_layer not in tile_layers:
+        raise ValueError(
+            f"Unknown tile_layer '{tile_layer}'. "
+            f"Available options are: {list(tile_layers.keys())}"
+        )
+
+    selected_tile_layer = tile_layers[tile_layer]
+
+
+
 
     html_content = f"""
     <!DOCTYPE html>
@@ -226,10 +304,8 @@ def netMap(cities_data, connections_data, title="Network Map", maximum_nodes=100
       let lonMax = 180;
 
       const map = L.map('map').setView([20, 0], 2);
-      L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
-      }}).addTo(map);
+
+      {selected_tile_layer}
       
 
 
