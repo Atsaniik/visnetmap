@@ -16,6 +16,7 @@ It provides two main visualization tools:
 The package is designed for researchers, students, and analysts who want to quickly generate shareable HTML visualizations from Python data structures, NetworkX graphs, or location-based network data.
 
 ---
+| Quick start | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YKwaPAeWbyT8vSgPNVGXKzvAQ7r2SqNP?usp=sharing) |
 
 ## Live demo
 
@@ -23,7 +24,7 @@ A presentation/demo page is available here:
 
 [https://atsaniik.github.io/Finland_DMOs_Vienna/](https://atsaniik.github.io/Finland_DMOs_Vienna/)
 
-| colab quick start | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YKwaPAeWbyT8vSgPNVGXKzvAQ7r2SqNP?usp=sharing) |
+
 ---
 
 ## Main features
