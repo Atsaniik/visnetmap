@@ -23,8 +23,7 @@ A presentation/demo page is available here:
 
 [https://atsaniik.github.io/Finland_DMOs_Vienna/](https://atsaniik.github.io/Finland_DMOs_Vienna/)
 
-This page demonstrates the type of interactive network and map visualizations that can be produced with `visnetmap`.
-
+| colab quick start | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YKwaPAeWbyT8vSgPNVGXKzvAQ7r2SqNP?usp=sharing) |
 ---
 
 ## Main features
